@@ -29,6 +29,7 @@ void setup()
 
 void loop() 
 {
+  distanceTimer.update();
   signal1.update();
   ledStrip.update();
 }
