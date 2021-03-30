@@ -1,6 +1,6 @@
 # SignalControlSmartLedLight
 An extension to the SignalControl library to support 
-smart LEDs such as NeoPixel.
+smart LEDs such as NeoPixel using the FastLED library.
 
 The example sketch Signal4Aspect shows how to create a
 modern 4 aspect signal with only 2 apertures. 
