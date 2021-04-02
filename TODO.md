@@ -21,3 +21,29 @@ Implement a notification framework that
 * Can be disabled once development phase is over.
   This will save program memory.
   
+### Reverse object references
+An alternative fix for the array problem is to reverse
+the object references and order they are constructed.
+E.g. the SmartLedStrip is created last, when the number of
+SmartLed objects are known. 
+The SmartLedStrip can then be created with the known number of
+SmartLed objects and the array can be created with the correct
+size. 
+
+Advantages:
+* Know how what size each array needs to be.
+* Objects are created with a list of their dependent objects.
+  This shows clearer what objects belong to each other compared 
+  to declaring dependent objects with their owning object as parameter.
+
+Disadvantages:
+* Need to call strip.init() in setup(). Prefer to keep code
+  in one place, i.e. with constructor.
+
+Possible fixes:
+* One fix is to use a static create() method that constructs
+  the strip and calls the virtual init method.
+* Use a template type on SmartLedStripBase to specify the 
+  FastLED type to use with addLeds. 
+  SmartLedStripBase now calls FastLED.addLeds().
+  * This can be tricky as different types uses different parameters.

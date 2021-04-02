@@ -1,17 +1,7 @@
 #include "Arduino.hpp"
 #include "ArduinoMock.hpp"
 #include "TestTools.hpp"
-#include "SmartLed.h"
 #include "SmartLedLight.h"
-#include "SmartLedStripBase.h"
-
-class MockSmartLedStrip : public SmartLedStripBase
-{
-public:
-  MockSmartLedStrip(int nLeds)
-    : SmartLedStripBase(nLeds)
-  {}
-};
 
 void testSmartLedLight_construct()
 {
@@ -19,9 +9,7 @@ void testSmartLedLight_construct()
   clearArduinoValues();
   FastLEDtraces.clear();
 
-  MockSmartLedStrip strip(7);
-  SmartLed led(strip, 5);
-  SmartLedLight light(CRGB::Green, led);
+  SmartLedLight light(CRGB::Green);
 
   assertEquals(false, light.get());
   assertEquals(CRGB::Green, light.getColor());
@@ -34,9 +22,7 @@ void testSmartLedLight_turnOn()
   clearArduinoValues();
   FastLEDtraces.clear();
 
-  MockSmartLedStrip strip(7);
-  SmartLed led(strip, 5);
-  SmartLedLight light(CRGB::Green, led);
+  SmartLedLight light(CRGB::Green);
 
   light.set(true);
 

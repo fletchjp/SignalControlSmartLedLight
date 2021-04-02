@@ -4,19 +4,37 @@ class SmartLedLight;
 
 class SmartLed
 {
-  SmartLedStripBase & strip;
   int ledIndex;
-  const SmartLedLight *lights[3]; // Max 3 pointers to lights that control this LED.
-  int nLights = 0;
+  const SmartLedLight **lights;
+  int nLights;
   
 public:
-  SmartLed(SmartLedStripBase & strip, int ledIndex);
-
-  void add(SmartLedLight const * light)
+  SmartLed(int ledIndex, SmartLedLight & sll1)
+    : ledIndex(ledIndex)
+    , lights(new SmartLedLight const *[1])
+    , nLights(1)
   {
-    // TODO: Protect against too many lights added.
-    lights[nLights++] = light;
+    lights[0] = &sll1;
   }
 
-  void update();
+  SmartLed(int ledIndex, SmartLedLight & sll1, SmartLedLight & sll2)
+    : ledIndex(ledIndex)
+    , lights(new SmartLedLight const *[2])
+    , nLights(2)
+  {
+    lights[0] = &sll1;
+    lights[1] = &sll2;
+  }
+
+  SmartLed(int ledIndex, SmartLedLight & sll1, SmartLedLight & sll2, SmartLedLight & sll3)
+    : ledIndex(ledIndex)
+    , lights(new SmartLedLight const *[3])
+    , nLights(3)
+  {
+    lights[0] = &sll1;
+    lights[1] = &sll2;
+    lights[2] = &sll3;
+  }
+
+  void update(SmartLedStripBase & strip);
 };

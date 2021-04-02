@@ -9,20 +9,21 @@ const int stripControllerPin = 5;
 
 DistanceTimer distanceTimer(triggerPin);
 
-NeoPixelStrip<stripControllerPin> ledStrip(2);
+SmartLedLight greenLight(CRGB::Green);
+SmartLedLight redLight(CRGB::Red);
+SmartLedLight yellowLight1(CRGB::Orange);
+SmartLedLight yellowLight2(CRGB::Orange);
+SmartLed upperLed(0, yellowLight2);
+SmartLed lowerLed(1, redLight, yellowLight1, greenLight);
+NeoPixelStrip<stripControllerPin> ledStrip(upperLed, lowerLed);
 //SK6812Strip<stripControllerPin> ledStrip2(2);  // Not used. Provided as example of using default colour order.
 //SK6812Strip<stripControllerPin, RGB> ledStrip3(2);  // Not used. Provided as example of specifying colour order.
 
-SmartLed upperLed(ledStrip, 0);
-SmartLed lowerLed(ledStrip, 1);
-SmartLedLight greenLight(CRGB::Green, lowerLed);
-SmartLedLight redLight(CRGB::Red, lowerLed);
-SmartLedLight yellowLight1(CRGB::Orange, lowerLed);
-SmartLedLight yellowLight2(CRGB::Orange, upperLed);
 Signal4Aspect signal1(distanceTimer, greenLight, redLight, yellowLight1, yellowLight2);
 
 void setup() 
 {
+  ledStrip.init();
   ledStrip.setBrightness(40);
   ledStrip.setTemperature(Tungsten100W);
 }

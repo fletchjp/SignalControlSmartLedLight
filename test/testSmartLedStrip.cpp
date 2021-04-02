@@ -11,22 +11,12 @@ void testSmartLedStrip_construct()
   clearArduinoValues();
   FastLEDtraces.clear();
 
-  NeoPixelStrip<5> ledStrip(2);
-
-  assertEquals(1, FastLEDtraces.size());
-  assertEquals("CFastLED::addLeds<>({leds}, 2)", FastLEDtraces[0]);
-}
-
-void testSmartLedStrip_constructWithLeds()
-{
-  test();
-  clearArduinoValues();
-  FastLEDtraces.clear();
-
-  NeoPixelStrip<5> strip(2);
-  SmartLed led(strip, 5);
-  SmartLedLight lightGreen(CRGB::Green, led);
-  SmartLedLight lightRed(CRGB::Red, led);
+  SmartLedLight lightGreen(CRGB::Green);
+  SmartLedLight lightRed(CRGB::Red);
+  SmartLed upperLed(0, lightGreen);
+  SmartLed lowerLed(1, lightRed);
+  NeoPixelStrip<5> ledStrip(upperLed, lowerLed);
+  ledStrip.init();
 
   assertEquals(1, FastLEDtraces.size());
   assertEquals("CFastLED::addLeds<>({leds}, 2)", FastLEDtraces[0]);
@@ -38,10 +28,11 @@ void testSmartLedStrip_updateRed()
   clearArduinoValues();
   FastLEDtraces.clear();
 
-  NeoPixelStrip<5> strip(1);
-  SmartLed led(strip, 0);
-  SmartLedLight lightRed(CRGB::Red, led);
-  SmartLedLight lightGreen(CRGB::Green, led);
+  SmartLedLight lightGreen(CRGB::Green);
+  SmartLedLight lightRed(CRGB::Red);
+  SmartLed led(0, lightGreen, lightRed);
+  NeoPixelStrip<5> strip(led);
+  strip.init();
   lightRed.set(true);
 
   strip.update();
@@ -57,10 +48,11 @@ void testSmartLedStrip_updateNoneSet()
   clearArduinoValues();
   FastLEDtraces.clear();
 
-  NeoPixelStrip<5> strip(1);
-  SmartLed led(strip, 0);
-  SmartLedLight lightRed(CRGB::Red, led);
-  SmartLedLight lightGreen(CRGB::Green, led);
+  SmartLedLight lightGreen(CRGB::Green);
+  SmartLedLight lightRed(CRGB::Red);
+  SmartLed led(0, lightGreen, lightRed);
+  NeoPixelStrip<5> strip(led);
+  strip.init();
 
   strip.update();
 
@@ -75,10 +67,11 @@ void testSmartLedStrip_updateGreen()
   clearArduinoValues();
   FastLEDtraces.clear();
 
-  NeoPixelStrip<5> strip(1);
-  SmartLed led(strip, 0);
-  SmartLedLight lightRed(CRGB::Red, led);
-  SmartLedLight lightGreen(CRGB::Green, led);
+  SmartLedLight lightGreen(CRGB::Green);
+  SmartLedLight lightRed(CRGB::Red);
+  SmartLed led(0, lightGreen, lightRed);
+  NeoPixelStrip<5> strip(led);
+  strip.init();
   lightGreen.set(true);
 
   strip.update();
@@ -94,10 +87,11 @@ void testSmartLedStrip_updateBothSet()
   clearArduinoValues();
   FastLEDtraces.clear();
 
-  NeoPixelStrip<5> strip(1);
-  SmartLed led(strip, 0);
-  SmartLedLight lightRed(CRGB::Red, led);
-  SmartLedLight lightGreen(CRGB::Green, led);
+  SmartLedLight lightGreen(CRGB::Green);
+  SmartLedLight lightRed(CRGB::Red);
+  SmartLed led(0, lightRed, lightGreen);
+  NeoPixelStrip<5> strip(led);
+  strip.init();
   lightRed.set(true);
   lightGreen.set(true);
 
@@ -111,7 +105,6 @@ void testSmartLedStrip_updateBothSet()
 void testSmartLedStrip()
 {
   testSmartLedStrip_construct();
-  testSmartLedStrip_constructWithLeds();
   testSmartLedStrip_updateNoneSet();
   testSmartLedStrip_updateRed();
   testSmartLedStrip_updateGreen();

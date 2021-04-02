@@ -2,14 +2,7 @@
 #include "SmartLed.h"
 #include "SmartLedLight.h"
 
-SmartLed::SmartLed(SmartLedStripBase & strip, int ledIndex)
-  : strip(strip)
-  , ledIndex(ledIndex)
-{
-  strip.add(this);
-}
-
-void SmartLed::update()
+void SmartLed::update(SmartLedStripBase & strip)
 {
   for (int i = 0 ; i < nLights ; ++i)
   {

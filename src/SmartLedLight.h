@@ -9,11 +9,10 @@ class SmartLedLight : public Light
   CRGB::HTMLColorCode color;
 
 public:
-  SmartLedLight(CRGB::HTMLColorCode color, SmartLed & smartLed)
+  SmartLedLight(CRGB::HTMLColorCode color)
     : lightOn(false)
     , color(color)
   {
-    smartLed.add(this);
   }
 
   void set(bool lightOn) override

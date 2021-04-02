@@ -10,9 +10,7 @@ class MockSmartLedStrip : public SmartLedStripBase
 protected:
   using SmartLedStripBase::leds;
 public:
-  MockSmartLedStrip(int nLeds)
-    : SmartLedStripBase(nLeds)
-  {}
+  using SmartLedStripBase::SmartLedStripBase;
 
   CRGB const & getLed(int index)
   {
@@ -26,21 +24,9 @@ void testSmartLed_construct()
   clearArduinoValues();
   FastLEDtraces.clear();
 
-  MockSmartLedStrip strip(7);
-  SmartLed led(strip, 5);
-
-  assertEquals(0, FastLEDtraces.size());
-}
-
-void testSmartLed_addLight()
-{
-  test();
-  clearArduinoValues();
-  FastLEDtraces.clear();
-
-  MockSmartLedStrip strip(7);
-  SmartLed led(strip, 5);
-  SmartLedLight light(CRGB::Green, led);
+  SmartLedLight lightGreen(CRGB::Green);
+  SmartLedLight lightRed(CRGB::Red);
+  SmartLed led(5, lightGreen, lightRed);
 
   assertEquals(0, FastLEDtraces.size());
 }
@@ -51,12 +37,12 @@ void testSmartLed_update_lightsOff()
   clearArduinoValues();
   FastLEDtraces.clear();
 
-  MockSmartLedStrip strip(7);
-  SmartLed led(strip, 5);
-  SmartLedLight lightGreen(CRGB::Green, led);
-  SmartLedLight lightRed(CRGB::Red, led);
+  SmartLedLight lightGreen(CRGB::Green);
+  SmartLedLight lightRed(CRGB::Red);
+  SmartLed led(5, lightGreen, lightRed);
+  MockSmartLedStrip strip(led);
 
-  led.update();
+  led.update(strip);
 
   assertEquals((uint32_t)CRGB::Black, strip.getLed(5).getColorCode());
   assertEquals(0, FastLEDtraces.size());
@@ -68,13 +54,13 @@ void testSmartLed_update_lightsGreen()
   clearArduinoValues();
   FastLEDtraces.clear();
 
-  MockSmartLedStrip strip(7);
-  SmartLed led(strip, 5);
-  SmartLedLight lightGreen(CRGB::Green, led);
-  SmartLedLight lightRed(CRGB::Red, led);
+  SmartLedLight lightGreen(CRGB::Green);
+  SmartLedLight lightRed(CRGB::Red);
+  SmartLed led(5, lightGreen, lightRed);
+  MockSmartLedStrip strip(led);
 
   lightGreen.set(true);
-  led.update();
+  led.update(strip);
 
   assertEquals((uint32_t)CRGB::Green, strip.getLed(5).getColorCode());
   assertEquals(0, FastLEDtraces.size());
@@ -86,13 +72,13 @@ void testSmartLed_update_lightsRed()
   clearArduinoValues();
   FastLEDtraces.clear();
 
-  MockSmartLedStrip strip(7);
-  SmartLed led(strip, 5);
-  SmartLedLight lightGreen(CRGB::Green, led);
-  SmartLedLight lightRed(CRGB::Red, led);
+  SmartLedLight lightGreen(CRGB::Green);
+  SmartLedLight lightRed(CRGB::Red);
+  SmartLed led(5, lightGreen, lightRed);
+  MockSmartLedStrip strip(led);
 
   lightRed.set(true);
-  led.update();
+  led.update(strip);
 
   assertEquals((uint32_t)CRGB::Red, strip.getLed(5).getColorCode());
   assertEquals(0, FastLEDtraces.size());
@@ -104,14 +90,15 @@ void testSmartLed_update_lightsBoth()
   clearArduinoValues();
   FastLEDtraces.clear();
 
-  MockSmartLedStrip strip(7);
-  SmartLed led(strip, 5);
-  SmartLedLight lightGreen(CRGB::Green, led);
-  SmartLedLight lightRed(CRGB::Red, led);
+  SmartLedLight lightGreen(CRGB::Green);
+  SmartLedLight lightRed(CRGB::Red);
+  SmartLed led(5, lightGreen, lightRed);
+  MockSmartLedStrip strip(led);
+  strip.init();
 
   lightGreen.set(true);
   lightRed.set(true);
-  led.update();
+  led.update(strip);
 
   assertEquals((uint32_t)CRGB::Green, strip.getLed(5).getColorCode());
   assertEquals(0, FastLEDtraces.size());
@@ -120,7 +107,6 @@ void testSmartLed_update_lightsBoth()
 void testSmartLed()
 {
   testSmartLed_construct();
-  testSmartLed_addLight();
   testSmartLed_update_lightsOff();
   testSmartLed_update_lightsGreen();
   testSmartLed_update_lightsRed();
