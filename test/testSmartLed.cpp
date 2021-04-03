@@ -6,12 +6,12 @@
 #include "SmartLedStrip.h"
 
 class MockController;
-class MockSmartLedStrip : public SmartLedStrip<MockController, 5>
+class MockSmartLedStrip : public SmartLedStrip
 {
 protected:
-  using SmartLedStrip<MockController, 5>::leds;
+  using SmartLedStrip::leds;
 public:
-  using SmartLedStrip<MockController, 5>::SmartLedStrip;
+  using SmartLedStrip::SmartLedStrip;
 
   CRGB const & getLed(int index)
   {
@@ -46,8 +46,7 @@ void testSmartLed_update_lightsOff()
   led.update(strip);
 
   assertEquals((uint32_t)CRGB::Black, strip.getLed(5).getColorCode());
-  assertEquals(1, FastLEDtraces.size());
-  assertEquals("CFastLED::addLeds<>({leds}, 1)", FastLEDtraces[0]);
+  assertEquals(0, FastLEDtraces.size());
 }
 
 void testSmartLed_update_lightsGreen()
@@ -65,8 +64,7 @@ void testSmartLed_update_lightsGreen()
   led.update(strip);
 
   assertEquals((uint32_t)CRGB::Green, strip.getLed(5).getColorCode());
-  assertEquals(1, FastLEDtraces.size());
-  assertEquals("CFastLED::addLeds<>({leds}, 1)", FastLEDtraces[0]);
+  assertEquals(0, FastLEDtraces.size());
 }
 
 void testSmartLed_update_lightsRed()
@@ -84,8 +82,7 @@ void testSmartLed_update_lightsRed()
   led.update(strip);
 
   assertEquals((uint32_t)CRGB::Red, strip.getLed(5).getColorCode());
-  assertEquals(1, FastLEDtraces.size());
-  assertEquals("CFastLED::addLeds<>({leds}, 1)", FastLEDtraces[0]);
+  assertEquals(0, FastLEDtraces.size());
 }
 
 void testSmartLed_update_lightsBoth()
@@ -104,8 +101,7 @@ void testSmartLed_update_lightsBoth()
   led.update(strip);
 
   assertEquals((uint32_t)CRGB::Green, strip.getLed(5).getColorCode());
-  assertEquals(1, FastLEDtraces.size());
-  assertEquals("CFastLED::addLeds<>({leds}, 1)", FastLEDtraces[0]);
+  assertEquals(0, FastLEDtraces.size());
 }
 
 void testSmartLed()

@@ -10,6 +10,15 @@ typedef enum {
     Tungsten100W=0xFFD6AA /* 2850 K, 255, 214, 170 */,
 } ColorTemperature;
 
+enum EOrder {
+  RGB=0012,
+  RBG=0021,
+  GRB=0102,
+  GBR=0120,
+  BRG=0201,
+  BGR=0210
+};
+
 struct CRGB
 {
   typedef enum {
@@ -49,6 +58,10 @@ class CFastLED
 public:
   template<class Chipset, int pin>
   void addLeds(struct CRGB *data, int nLedsOrOffset);
+
+  template<class Chipset, int pin, EOrder RGB_order>
+  void addLeds(struct CRGB *data, int nLedsOrOffset);
+
   void setBrightness(uint8_t scale) {}
   void setTemperature(const struct CRGB & temp) {}
   void show();
@@ -65,15 +78,18 @@ void CFastLED::addLeds(struct CRGB *data, int nLedsOrOffset)
 {
   trackedLeds = data;
   nTrackedLeds = nLedsOrOffset;
-  FastLEDtraces.push_back(std::string("CFastLED::addLeds<>({leds}, ")
+  FastLEDtraces.push_back(std::string("CFastLED::addLeds<Chipset, ")
+                          + std::to_string(pin) + ">({leds}, "
                           + std::to_string(nLedsOrOffset) + ")"); 
 }
 
-enum EOrder {
-  RGB=0012,
-  RBG=0021,
-  GRB=0102,
-  GBR=0120,
-  BRG=0201,
-  BGR=0210
-};
+template<class Chipset, int pin, EOrder RGB_order>
+void CFastLED::addLeds(struct CRGB *data, int nLedsOrOffset)
+{
+  trackedLeds = data;
+  nTrackedLeds = nLedsOrOffset;
+  FastLEDtraces.push_back(std::string("CFastLED::addLeds<Chipset, ")
+                          + std::to_string(pin) + ", "
+                          + std::to_string(RGB_order) + ">({leds}, "
+                          + std::to_string(nLedsOrOffset) + ")");
+}

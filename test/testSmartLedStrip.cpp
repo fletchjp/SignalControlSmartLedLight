@@ -2,7 +2,7 @@
 #include "ArduinoMock.hpp"
 #include "TestTools.hpp"
 #include "NeoPixelStrip.h"
-//#include "SK6812Strip.h"
+#include "SK6812Strip.h"
 #include "SmartLed.h"
 #include "SmartLedLight.h"
 
@@ -19,7 +19,7 @@ void testSmartLedStrip_construct()
   NeoPixelStrip<5> ledStrip(upperLed, lowerLed);
 
   assertEquals(1, FastLEDtraces.size());
-  assertEquals("CFastLED::addLeds<>({leds}, 2)", FastLEDtraces[0]);
+  assertEquals("CFastLED::addLeds<Chipset, 5>({leds}, 2)", FastLEDtraces[0]);
 }
 
 void testSmartLedStrip_updateRed()
@@ -37,7 +37,7 @@ void testSmartLedStrip_updateRed()
   strip.update();
 
   assertEquals(2, FastLEDtraces.size());
-  assertEquals("CFastLED::addLeds<>({leds}, 1)", FastLEDtraces[0]);
+  assertEquals("CFastLED::addLeds<Chipset, 5>({leds}, 1)", FastLEDtraces[0]);
   assertEquals("CFastLED::show() led[0]=ff0000", FastLEDtraces[1]);
 }
 
@@ -55,7 +55,7 @@ void testSmartLedStrip_updateNoneSet()
   strip.update();
 
   assertEquals(2, FastLEDtraces.size());
-  assertEquals("CFastLED::addLeds<>({leds}, 1)", FastLEDtraces[0]);
+  assertEquals("CFastLED::addLeds<Chipset, 5>({leds}, 1)", FastLEDtraces[0]);
   assertEquals("CFastLED::show() led[0]=0", FastLEDtraces[1]);
 }
 
@@ -74,7 +74,7 @@ void testSmartLedStrip_updateGreen()
   strip.update();
 
   assertEquals(2, FastLEDtraces.size());
-  assertEquals("CFastLED::addLeds<>({leds}, 1)", FastLEDtraces[0]);
+  assertEquals("CFastLED::addLeds<Chipset, 5>({leds}, 1)", FastLEDtraces[0]);
   assertEquals("CFastLED::show() led[0]=8000", FastLEDtraces[1]);
 }
 
@@ -94,25 +94,25 @@ void testSmartLedStrip_updateBothSet()
   strip.update();
 
   assertEquals(2, FastLEDtraces.size());
-  assertEquals("CFastLED::addLeds<>({leds}, 1)", FastLEDtraces[0]);
+  assertEquals("CFastLED::addLeds<Chipset, 5>({leds}, 1)", FastLEDtraces[0]);
   assertEquals("CFastLED::show() led[0]=ff0000", FastLEDtraces[1]);
 }
 
-//void testSmartLedStrip_constructSK6812()
-//{
-//  test();
-//  clearArduinoValues();
-//  FastLEDtraces.clear();
-//
-//  SmartLedLight lightGreen(CRGB::Green);
-//  SmartLedLight lightRed(CRGB::Red);
-//  SmartLed upperLed(0, lightGreen);
-//  SmartLed lowerLed(1, lightRed);
-//  SK6812Strip<5> ledStrip(upperLed, lowerLed);
-//
-//  assertEquals(1, FastLEDtraces.size());
-//  assertEquals("CFastLED::addLeds<>({leds}, 2)", FastLEDtraces[0]);
-//}
+void testSmartLedStrip_constructSK6812()
+{
+  test();
+  clearArduinoValues();
+  FastLEDtraces.clear();
+
+  SmartLedLight lightGreen(CRGB::Green);
+  SmartLedLight lightRed(CRGB::Red);
+  SmartLed upperLed(0, lightGreen);
+  SmartLed lowerLed(1, lightRed);
+  SK6812Strip<5> ledStrip(upperLed, lowerLed);
+
+  assertEquals(1, FastLEDtraces.size());
+  assertEquals("CFastLED::addLeds<Chipset, 5, 66>({leds}, 2)", FastLEDtraces[0]);
+}
 
 void testSmartLedStrip()
 {
@@ -121,5 +121,5 @@ void testSmartLedStrip()
   testSmartLedStrip_updateRed();
   testSmartLedStrip_updateGreen();
   testSmartLedStrip_updateBothSet();
-//  testSmartLedStrip_constructSK6812();
+  testSmartLedStrip_constructSK6812();
 }
