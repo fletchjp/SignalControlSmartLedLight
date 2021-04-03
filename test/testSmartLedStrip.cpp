@@ -2,6 +2,7 @@
 #include "ArduinoMock.hpp"
 #include "TestTools.hpp"
 #include "NeoPixelStrip.h"
+//#include "SK6812Strip.h"
 #include "SmartLed.h"
 #include "SmartLedLight.h"
 
@@ -16,7 +17,6 @@ void testSmartLedStrip_construct()
   SmartLed upperLed(0, lightGreen);
   SmartLed lowerLed(1, lightRed);
   NeoPixelStrip<5> ledStrip(upperLed, lowerLed);
-  ledStrip.init();
 
   assertEquals(1, FastLEDtraces.size());
   assertEquals("CFastLED::addLeds<>({leds}, 2)", FastLEDtraces[0]);
@@ -32,7 +32,6 @@ void testSmartLedStrip_updateRed()
   SmartLedLight lightRed(CRGB::Red);
   SmartLed led(0, lightGreen, lightRed);
   NeoPixelStrip<5> strip(led);
-  strip.init();
   lightRed.set(true);
 
   strip.update();
@@ -52,7 +51,6 @@ void testSmartLedStrip_updateNoneSet()
   SmartLedLight lightRed(CRGB::Red);
   SmartLed led(0, lightGreen, lightRed);
   NeoPixelStrip<5> strip(led);
-  strip.init();
 
   strip.update();
 
@@ -71,7 +69,6 @@ void testSmartLedStrip_updateGreen()
   SmartLedLight lightRed(CRGB::Red);
   SmartLed led(0, lightGreen, lightRed);
   NeoPixelStrip<5> strip(led);
-  strip.init();
   lightGreen.set(true);
 
   strip.update();
@@ -91,7 +88,6 @@ void testSmartLedStrip_updateBothSet()
   SmartLedLight lightRed(CRGB::Red);
   SmartLed led(0, lightRed, lightGreen);
   NeoPixelStrip<5> strip(led);
-  strip.init();
   lightRed.set(true);
   lightGreen.set(true);
 
@@ -102,6 +98,22 @@ void testSmartLedStrip_updateBothSet()
   assertEquals("CFastLED::show() led[0]=ff0000", FastLEDtraces[1]);
 }
 
+//void testSmartLedStrip_constructSK6812()
+//{
+//  test();
+//  clearArduinoValues();
+//  FastLEDtraces.clear();
+//
+//  SmartLedLight lightGreen(CRGB::Green);
+//  SmartLedLight lightRed(CRGB::Red);
+//  SmartLed upperLed(0, lightGreen);
+//  SmartLed lowerLed(1, lightRed);
+//  SK6812Strip<5> ledStrip(upperLed, lowerLed);
+//
+//  assertEquals(1, FastLEDtraces.size());
+//  assertEquals("CFastLED::addLeds<>({leds}, 2)", FastLEDtraces[0]);
+//}
+
 void testSmartLedStrip()
 {
   testSmartLedStrip_construct();
@@ -109,4 +121,5 @@ void testSmartLedStrip()
   testSmartLedStrip_updateRed();
   testSmartLedStrip_updateGreen();
   testSmartLedStrip_updateBothSet();
+//  testSmartLedStrip_constructSK6812();
 }

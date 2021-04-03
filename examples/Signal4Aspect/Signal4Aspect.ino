@@ -23,7 +23,6 @@ Signal4Aspect signal1(distanceTimer, greenLight, redLight, yellowLight1, yellowL
 
 void setup() 
 {
-  ledStrip.init();
   ledStrip.setBrightness(40);
   ledStrip.setTemperature(Tungsten100W);
 }

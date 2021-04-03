@@ -3,14 +3,15 @@
 #include "TestTools.hpp"
 #include "SmartLed.h"
 #include "SmartLedLight.h"
-#include "SmartLedStripBase.h"
+#include "SmartLedStrip.h"
 
-class MockSmartLedStrip : public SmartLedStripBase
+class MockController;
+class MockSmartLedStrip : public SmartLedStrip<MockController, 5>
 {
 protected:
-  using SmartLedStripBase::leds;
+  using SmartLedStrip<MockController, 5>::leds;
 public:
-  using SmartLedStripBase::SmartLedStripBase;
+  using SmartLedStrip<MockController, 5>::SmartLedStrip;
 
   CRGB const & getLed(int index)
   {
@@ -45,7 +46,8 @@ void testSmartLed_update_lightsOff()
   led.update(strip);
 
   assertEquals((uint32_t)CRGB::Black, strip.getLed(5).getColorCode());
-  assertEquals(0, FastLEDtraces.size());
+  assertEquals(1, FastLEDtraces.size());
+  assertEquals("CFastLED::addLeds<>({leds}, 1)", FastLEDtraces[0]);
 }
 
 void testSmartLed_update_lightsGreen()
@@ -63,7 +65,8 @@ void testSmartLed_update_lightsGreen()
   led.update(strip);
 
   assertEquals((uint32_t)CRGB::Green, strip.getLed(5).getColorCode());
-  assertEquals(0, FastLEDtraces.size());
+  assertEquals(1, FastLEDtraces.size());
+  assertEquals("CFastLED::addLeds<>({leds}, 1)", FastLEDtraces[0]);
 }
 
 void testSmartLed_update_lightsRed()
@@ -81,7 +84,8 @@ void testSmartLed_update_lightsRed()
   led.update(strip);
 
   assertEquals((uint32_t)CRGB::Red, strip.getLed(5).getColorCode());
-  assertEquals(0, FastLEDtraces.size());
+  assertEquals(1, FastLEDtraces.size());
+  assertEquals("CFastLED::addLeds<>({leds}, 1)", FastLEDtraces[0]);
 }
 
 void testSmartLed_update_lightsBoth()
@@ -94,14 +98,14 @@ void testSmartLed_update_lightsBoth()
   SmartLedLight lightRed(CRGB::Red);
   SmartLed led(5, lightGreen, lightRed);
   MockSmartLedStrip strip(led);
-  strip.init();
 
   lightGreen.set(true);
   lightRed.set(true);
   led.update(strip);
 
   assertEquals((uint32_t)CRGB::Green, strip.getLed(5).getColorCode());
-  assertEquals(0, FastLEDtraces.size());
+  assertEquals(1, FastLEDtraces.size());
+  assertEquals("CFastLED::addLeds<>({leds}, 1)", FastLEDtraces[0]);
 }
 
 void testSmartLed()

@@ -16,15 +16,12 @@ testAll : testAll.o \
 	ArduinoMock.o \
 	testArduino.o \
 	FastLED.o \
-	SmartLedStripBase.o \
 	SmartLed.o \
 	testSmartLedStrip.o \
 	testSmartLed.o \
 	testSmartLedLight.o
 
 
-SmartLedStripBase.o : ../src/SmartLedStripBase.cpp
-	$(CC) $(CPPFLAGS) -c $< -o $@
 SmartLed.o : ../src/SmartLed.cpp
 	$(CC) $(CPPFLAGS) -c $< -o $@
 

@@ -55,6 +55,7 @@ public:
 };
 
 class NEOPIXEL;
+class SK6812;
 
 extern CFastLED FastLED;
 extern std::vector<std::string> FastLEDtraces;
@@ -67,3 +68,12 @@ void CFastLED::addLeds(struct CRGB *data, int nLedsOrOffset)
   FastLEDtraces.push_back(std::string("CFastLED::addLeds<>({leds}, ")
                           + std::to_string(nLedsOrOffset) + ")"); 
 }
+
+enum EOrder {
+  RGB=0012,
+  RBG=0021,
+  GRB=0102,
+  GBR=0120,
+  BRG=0201,
+  BGR=0210
+};

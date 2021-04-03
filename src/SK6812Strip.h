@@ -1,14 +1,9 @@
 #include <FastLED.h>
-#include "SmartLedStripBase.h"
+#include "SmartLedStrip.h"
 
 template<int controlPin, EOrder RGB_ORDER = GRB> 
-class SK6812Strip : public SmartLedStripBase
+class SK6812Strip : public SmartLedStrip<SK6812, controlPin, RGB_ORDER>
 {
 public:
-  using SmartLedStripBase::SmartLedStripBase;
-
-  void addLeds(CRGB leds[], int nLeds) override
-  {
-    FastLED.addLeds<SK6812, controlPin, RGB_ORDER>(leds, nLeds);
-  }
+  using SmartLedStrip<SK6812, controlPin, RGB_ORDER>::SmartLedStrip;
 };

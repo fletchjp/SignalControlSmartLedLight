@@ -3,8 +3,9 @@ FastLED.o: FastLED.cpp FastLED.h
 TestTools.o: TestTools.cpp TestTools.hpp
 sketchSignal4Aspect.o: sketchSignal4Aspect.cpp Arduino.hpp \
  ../examples/Signal4Aspect/Signal4Aspect.ino ../src/NeoPixelStrip.h \
- FastLED.h ../src/SmartLedStripBase.h ../src/SmartLed.h \
- ../src/SmartLedLight.h ../../libraries/SignalControl/src/Light.h \
+ FastLED.h ../src/SmartLedStrip.h ../src/SmartLedStripBase.h \
+ ../src/SmartLed.h ../src/SmartLedLight.h \
+ ../../libraries/SignalControl/src/Light.h \
  ../../libraries/SignalControl/src/DistanceTimer.h \
  ../../libraries/SignalControl/src/DistanceInput.h \
  ../../libraries/SignalControl/src/DigitalInput.h \
@@ -16,11 +17,12 @@ testAll.o: testAll.cpp testArduino.hpp testSmartLedStrip.h testSmartLed.h \
 testArduino.o: testArduino.cpp Arduino.hpp TestTools.hpp
 testSmartLed.o: testSmartLed.cpp Arduino.hpp ArduinoMock.hpp \
  TestTools.hpp ../src/SmartLed.h ../src/SmartLedLight.h FastLED.h \
- ../../libraries/SignalControl/src/Light.h ../src/SmartLedStripBase.h
+ ../../libraries/SignalControl/src/Light.h ../src/SmartLedStrip.h \
+ ../src/SmartLedStripBase.h
 testSmartLedLight.o: testSmartLedLight.cpp Arduino.hpp ArduinoMock.hpp \
  TestTools.hpp ../src/SmartLedLight.h FastLED.h \
  ../../libraries/SignalControl/src/Light.h
 testSmartLedStrip.o: testSmartLedStrip.cpp Arduino.hpp ArduinoMock.hpp \
- TestTools.hpp ../src/NeoPixelStrip.h FastLED.h \
+ TestTools.hpp ../src/NeoPixelStrip.h FastLED.h ../src/SmartLedStrip.h \
  ../src/SmartLedStripBase.h ../src/SmartLed.h ../src/SmartLedLight.h \
  ../../libraries/SignalControl/src/Light.h
