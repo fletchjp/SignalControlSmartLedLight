@@ -1,6 +1,7 @@
-#include "SmartLedStrip.h"
+#include "SmartLedStripBase.h"
+#include "SmartLed.h"
 
-void SmartLedStrip::update()
+void SmartLedStripBase::update()
 {
   for (int i=0 ; i < nLeds ; ++i)
   {

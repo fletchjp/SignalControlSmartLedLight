@@ -3,15 +3,15 @@
 #include "TestTools.hpp"
 #include "SmartLed.h"
 #include "SmartLedLight.h"
-#include "SmartLedStrip.h"
+#include "SmartLedStripBase.h"
 
 class MockController;
-class MockSmartLedStrip : public SmartLedStrip
+class MockSmartLedStrip : public SmartLedStripBase
 {
 protected:
-  using SmartLedStrip::leds;
+  using SmartLedStripBase::leds;
 public:
-  using SmartLedStrip::SmartLedStrip;
+  using SmartLedStripBase::SmartLedStripBase;
 
   CRGB const & getLed(int index)
   {

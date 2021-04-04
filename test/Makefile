@@ -16,17 +16,16 @@ testAll : testAll.o \
 	ArduinoMock.o \
 	testArduino.o \
 	FastLED.o \
+	SmartLedStripBase.o \
 	SmartLed.o \
-	SmartLedStrip.o \
 	testSmartLedStrip.o \
 	testSmartLed.o \
 	testSmartLedLight.o
 
 
-SmartLed.o : ../src/SmartLed.cpp
+SmartLedStripBase.o : ../src/SmartLedStripBase.cpp
 	$(CC) $(CPPFLAGS) -c $< -o $@
-
-SmartLedStrip.o : ../src/SmartLedStrip.cpp
+SmartLed.o : ../src/SmartLed.cpp
 	$(CC) $(CPPFLAGS) -c $< -o $@
 
 examples: sketchSignal4Aspect.o

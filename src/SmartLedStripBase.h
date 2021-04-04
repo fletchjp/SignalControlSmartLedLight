@@ -6,7 +6,29 @@ class SmartLed;
 
 class SmartLedStripBase
 {
+protected:
+  SmartLed ** smartLeds;
+  CRGB * leds;
+  int nLeds;
+
 public:
+  SmartLedStripBase(SmartLed & sl1)
+    : smartLeds(new SmartLed*[1])
+    , leds(new CRGB[1])
+    , nLeds(1)
+  {
+    smartLeds[0] = &sl1;
+  }
+
+  SmartLedStripBase(SmartLed & sl1, SmartLed & sl2)
+    : smartLeds(new SmartLed*[2])
+    , leds(new CRGB[2])
+    , nLeds(2)
+  {
+    smartLeds[0] = &sl1;
+    smartLeds[1] = &sl2;
+  }
+
   void setBrightness(uint8_t scale)
   {
     FastLED.setBrightness(scale);
@@ -17,7 +39,10 @@ public:
     FastLED.setTemperature(temp);
   }
 
-  virtual void setLed(int ledIndex, CRGB::HTMLColorCode color) = 0;
+  void setLed(int ledIndex, CRGB::HTMLColorCode color)
+  {
+    leds[ledIndex] = color;
+  }
 
-  virtual void update() = 0;
+  void update();
 };
