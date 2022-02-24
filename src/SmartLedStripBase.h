@@ -15,6 +15,7 @@ protected:
 public:
   void add(SmartLed * smartLed)
   {
+    // TODO: Protect agains adding more LEDs than nLeds.
     smartLeds[nSmartLeds++] = smartLed;
   }
 
