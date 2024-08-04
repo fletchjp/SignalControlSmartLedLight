@@ -25,6 +25,7 @@ void setup()
 {
   ledStrip.setBrightness(40);
   ledStrip.setTemperature(Tungsten100W);
+  signal1.begin();
 }
 
 void loop() 
