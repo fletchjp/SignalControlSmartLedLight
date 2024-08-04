@@ -26,6 +26,11 @@ public:
     return lightOn;
   }
 
+  virtual void begin() override
+  {
+    //pinMode(lightPin, OUTPUT);
+  }
+
   CRGB::HTMLColorCode getColor() const
   {
     return color;
